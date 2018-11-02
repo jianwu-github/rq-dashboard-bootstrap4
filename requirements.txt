@@ -1,0 +1,13 @@
+arrow
+click
+flask
+itsdangerous       # via flask
+jinja2             # via flask
+markupsafe         # via jinja2
+nose
+python-dateutil    # via arrow
+redis
+rq
+six
+werkzeug           # via flask
+gunicorn
