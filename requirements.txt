@@ -6,6 +6,7 @@ jinja2             # via flask
 markupsafe         # via jinja2
 nose
 python-dateutil    # via arrow
+python-dotenv
 redis
 rq
 six

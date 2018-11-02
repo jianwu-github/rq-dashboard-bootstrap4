@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Redis Queue Dashboard</title>
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <!-- Font-Awesome CSS -->
+    <link href="{{ url_for('static', filename='font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for dashboard -->
+    <link href="{{ url_for('static', filename='css/dashboard.css') }}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;RQ Dashboard</a>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Workers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Queues</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Instant Jobs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Scheduled Jobs</a>
+          </li>
+        </ul>
+    </nav>
+    <main role="main" class="container">
+        <div class="jumbotron">
+            <h2><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;RQ Dashboard</h2>
+            <p class="lead">Monitoring Workers, Queues, Instant and Scheduled Jobs.</p>
+        </div>
+    </main>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper-umd-1.14.3.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+</body>
+</html>
