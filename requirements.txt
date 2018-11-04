@@ -9,6 +9,7 @@ python-dateutil    # via arrow
 python-dotenv
 redis
 rq
+rq-scheduler
 six
 werkzeug           # via flask
 gunicorn

@@ -35,6 +35,14 @@
                                 <th>Jobs</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            {% for rq_queue in rq_queues %}
+                                <tr>
+                                <td>{{ rq_queue }}</td>
+                                <td>0</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -53,6 +61,15 @@
                                 <th>State</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            {% for rq_worker in rq_workers %}
+                                <tr>
+                                <td>{{ rq_worker }}</td>
+                                <td>{{ rq_worker }}</td>
+                                <td>&nbsp;</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
                     </table>
                 </div>
             </div>

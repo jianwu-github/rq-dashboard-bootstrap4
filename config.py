@@ -16,4 +16,5 @@ class Config(object):
     REDIS_HOST = os.environ.get('REDIS_HOST') or "localhost"
     REDIS_PORT = os.environ.get('REDIS_PORT') or "6379"
     REDIS_DB = os.environ.get('REDIS_DB') or "0"
+    RQ_QUEUES = os.environ.get('RQ_QUEUES') or "default"
     RQ_POLL_INTERVAL = os.environ.get('RQ_POLL_INTERVAL') or "2500"
