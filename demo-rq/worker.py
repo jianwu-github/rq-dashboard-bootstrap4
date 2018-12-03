@@ -9,7 +9,7 @@ from rq import Connection, Worker
 
 # import required job packages/modules
 
-worker_prj_dir = Path(__file__).parent.absolute().parent
+worker_prj_dir = Path(__file__).parent.absolute()
 worker_prj_env_file = worker_prj_dir / 'rq-worker.env'
 
 if worker_prj_env_file.exists():
