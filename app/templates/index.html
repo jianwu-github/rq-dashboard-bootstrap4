@@ -89,6 +89,14 @@
                                 <th>State</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            {% for j in job_list %}
+                                <tr>
+                                <td>{{ j.id }}</td>
+                                <td>{{ j.status }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
                     </table>
                 </div>
             </div>
