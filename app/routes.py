@@ -34,7 +34,7 @@ def _get_job_list(redis_conn):
         
         for jid in job_ids:
             job = Job.fetch(jid, connection=redis_conn)
-            job_list.append({'id': jid, 'status: job.get_status()})
+            job_list.append({'id': jid, 'status': job.get_status()})
     
     return job_list
 
