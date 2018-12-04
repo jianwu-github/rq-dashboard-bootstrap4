@@ -35,7 +35,8 @@ def _get_job_list(redis_conn):
 def index():
     rq_queues = _get_queue_list()
     rq_workers = _get_queue_list()
-    return render_template('index.html', rq_queues=rq_queues, rq_workers=rq_workers)
+    job_list = _get_job_list(current_app.redis_conn)
+    return render_template('index.html', rq_queues=rq_queues, rq_workers=rq_workers, job_list=job_list)
 
 
 @app.route('/queues')
