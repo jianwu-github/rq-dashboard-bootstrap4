@@ -60,7 +60,7 @@ def index():
     rq_queues = _get_queue_list()
     rq_workers = _get_queue_list()
     job_list = _get_job_list(current_app.redis_conn)
-    scheduled_jobs = _get_scheduled_jobs()
+    scheduled_jobs = _get_scheduled_jobs(current_app.redis_conn)
     return render_template('index.html', rq_queues=rq_queues, rq_workers=rq_workers, job_list=job_list, scheduled_jobs=scheduled_jobs)
 
 
@@ -84,5 +84,5 @@ def jobs():
 
 @app.route('/schedulers')
 def schedulers():
-    scheduled_jobs = _get_scheduled_jobs()
+    scheduled_jobs = _get_scheduled_jobs(current_app.redis_conn)
     return render_template('schedulers.html', scheduled_jobs=scheduled_jobs)
