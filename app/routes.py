@@ -2,6 +2,8 @@ from flask import current_app, render_template, redirect, url_for
 
 from redis import Redis
 from rq import Queue
+from rq.job import Job
+from rq.registry import FinishedJobRegistry
 
 from app import app
 
@@ -26,6 +28,13 @@ def _get_job_list(redis_conn):
         
         for j in jobs:
             job_list.append({'id': j.get_id(), 'status': j.get_status()})
+            
+        registry = FinishedJobRegistry(name=q, connection=redis_conn)
+        job_ids = registry.get_job_ids()
+        
+        for jid in job_ids:
+            job = Job.fetch(jid, connection=redis_conn)
+            job_list.append({'id': jid, 'status: job.get_status()})
     
     return job_list
 
