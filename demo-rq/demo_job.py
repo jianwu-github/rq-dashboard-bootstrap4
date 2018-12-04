@@ -23,3 +23,5 @@ def run_demo_job():
     redis_client.expire(next_demo_job_sts_key, CACHE_TTL_SECONDS)
 
     redis_client.set(LAST_DEMO_JOB_ID, next_demo_job_id)
+    
+    return f'demo job executed with id: {next_demo_job_id}'
