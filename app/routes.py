@@ -1,5 +1,8 @@
 from flask import current_app, render_template, redirect, url_for
 
+from redis import Redis
+from rq import Queue
+
 from app import app
 
 
@@ -10,6 +13,17 @@ def _get_queue_list():
         return rq_queues.split(",")
     else:
         return [rq_queues]
+    
+ 
+def _get_job_list():
+    queue_list = _get_queue_list()
+    job_list = []
+    
+    # TODO pull jobs from queues
+    for q in queue_list:
+        pass
+    
+    return job_list
 
 
 @app.route('/')
@@ -34,7 +48,8 @@ def workers():
 
 @app.route('/jobs')
 def jobs():
-    return render_template('jobs.html')
+    job_list = _get_job_list()
+    return render_template('jobs.html', job_list=job_list)
 
 
 @app.route('/schedulers')
