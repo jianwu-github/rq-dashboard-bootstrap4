@@ -1,5 +1,6 @@
 from flask import current_app, url_for
 
+from redis import Redis
 from rq import (Queue, Worker, cancel_job, get_failed_queue, pop_connection, push_connection, requeue_job)
 from rq.job import Job
 from rq_scheduler import Scheduler
