@@ -15,13 +15,17 @@ def _get_queue_list():
         return [rq_queues]
     
  
-def _get_job_list():
+def _get_job_list(redis_conn):
     queue_list = _get_queue_list()
     job_list = []
     
     # TODO pull jobs from queues
     for q in queue_list:
-        pass
+        queue = Queue(q, redis_conn)
+        jobs = queue.get_jobs()
+        
+        for j in jobs:
+            job_list.append({'id': j.get_id(), 'status': j.get_status()})
     
     return job_list
 
@@ -48,7 +52,7 @@ def workers():
 
 @app.route('/jobs')
 def jobs():
-    job_list = _get_job_list()
+    job_list = _get_job_list(current_app.redis_conn)
     return render_template('jobs.html', job_list=job_list)
 
 
