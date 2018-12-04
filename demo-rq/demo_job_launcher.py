@@ -35,4 +35,5 @@ def launch_demo_job():
     print(job.result)
 
     
-launch_demo_job()
+if __name__ == '__main__':
+    launch_demo_job()
