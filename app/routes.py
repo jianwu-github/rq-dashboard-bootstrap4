@@ -21,7 +21,7 @@ def _get_job_list(redis_conn):
     
     # TODO pull jobs from queues
     for q in queue_list:
-        queue = Queue(q, redis_conn)
+        queue = Queue(q, connection=redis_conn)
         jobs = queue.get_jobs()
         
         for j in jobs:
