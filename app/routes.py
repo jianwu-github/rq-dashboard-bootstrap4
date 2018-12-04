@@ -5,6 +5,8 @@ from rq import Queue
 from rq.job import Job
 from rq.registry import FinishedJobRegistry
 
+from rq_scheduler import Scheduler
+
 from app import app
 
 
@@ -21,7 +23,6 @@ def _get_job_list(redis_conn):
     queue_list = _get_queue_list()
     job_list = []
     
-    # TODO pull jobs from queues
     for q in queue_list:
         queue = Queue(q, connection=redis_conn)
         jobs = queue.get_jobs()
@@ -39,13 +40,28 @@ def _get_job_list(redis_conn):
     return job_list
 
 
+def _get_scheduled_jobs(redis_conn):
+    queue_list = _get_queue_list()
+    job_list = []
+    
+    for q in queue_list:
+        scheduler = Scheduler(queue_name=q, conncetion=redis_conn)
+        jobs = scheduler.get_jobs()
+        
+        for j in jobs:
+            job_list.append({'id': j.get_id(), 'status': j.get_status()})
+    
+    return job_list
+        
+
 @app.route('/')
 @app.route('/index')
 def index():
     rq_queues = _get_queue_list()
     rq_workers = _get_queue_list()
     job_list = _get_job_list(current_app.redis_conn)
-    return render_template('index.html', rq_queues=rq_queues, rq_workers=rq_workers, job_list=job_list)
+    scheduled_jobs = _get_scheduled_jobs()
+    return render_template('index.html', rq_queues=rq_queues, rq_workers=rq_workers, job_list=job_list, scheduled_jobs=scheduled_jobs)
 
 
 @app.route('/queues')
@@ -68,4 +84,5 @@ def jobs():
 
 @app.route('/schedulers')
 def schedulers():
-    return render_template('schedulers.html')
+    scheduled_jobs = _get_scheduled_jobs()
+    return render_template('schedulers.html', scheduled_jobs=scheduled_jobs)
