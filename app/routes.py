@@ -45,7 +45,7 @@ def _get_scheduled_jobs(redis_conn):
     job_list = []
     
     for q in queue_list:
-        scheduler = Scheduler(queue_name=q, conncetion=redis_conn)
+        scheduler = Scheduler(queue_name=q, connection=redis_conn)
         jobs = scheduler.get_jobs()
         
         for j in jobs:
