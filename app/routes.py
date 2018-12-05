@@ -1,6 +1,5 @@
-from flask import current_app, render_template, redirect, url_for
+from flask import current_app, render_template
 
-from redis import Redis
 from rq import Queue
 from rq.job import Job
 from rq.registry import FinishedJobRegistry
@@ -17,42 +16,42 @@ def _get_queue_list():
         return rq_queues.split(",")
     else:
         return [rq_queues]
-    
- 
+
+
 def _get_job_list(redis_conn):
     queue_list = _get_queue_list()
     job_list = []
-    
+
     for q in queue_list:
         queue = Queue(q, connection=redis_conn)
         jobs = queue.get_jobs()
-        
+
         for j in jobs:
             job_list.append({'id': j.get_id(), 'status': j.get_status()})
-            
+
         registry = FinishedJobRegistry(name=q, connection=redis_conn)
         job_ids = registry.get_job_ids()
-        
+
         for jid in job_ids:
             job = Job.fetch(jid, connection=redis_conn)
             job_list.append({'id': jid, 'status': job.get_status()})
-    
+
     return job_list
 
 
 def _get_scheduled_jobs(redis_conn):
     queue_list = _get_queue_list()
     job_list = []
-    
+
     for q in queue_list:
         scheduler = Scheduler(queue_name=q, connection=redis_conn)
         jobs = scheduler.get_jobs()
-        
+
         for j in jobs:
             job_list.append({'id': j.get_id(), 'status': j.get_status()})
-    
+
     return job_list
-        
+
 
 @app.route('/')
 @app.route('/index')
