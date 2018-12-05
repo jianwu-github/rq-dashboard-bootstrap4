@@ -53,14 +53,30 @@ def _get_scheduled_jobs(redis_conn):
     return job_list
 
 
+def _get_scheduler_sts(redis_conn):
+    queue_list = _get_queue_list()
+    scheduler_list = []
+
+    for q in queue_list:
+        scheduler = Scheduler(queue_name=q, connection=redis_conn)
+
+        if (scheduler.connection.exists(scheduler.scheduler_key) and
+            not scheduler.connection.hexists(scheduler.scheduler_key, 'death')):
+            scheduler_list.append({'id': f'scheduler on {q}', 'status': 'running'})
+        else:
+            scheduler_list.append({'id': f'No running scheduler on {q}', 'status': 'N/A'})
+
+    return scheduler_list
+
+
 @app.route('/')
 @app.route('/index')
 def index():
     rq_queues = _get_queue_list()
     rq_workers = _get_queue_list()
     job_list = _get_job_list(current_app.redis_conn)
-    scheduled_jobs = _get_scheduled_jobs(current_app.redis_conn)
-    return render_template('index.html', rq_queues=rq_queues, rq_workers=rq_workers, job_list=job_list, scheduled_jobs=scheduled_jobs)
+    schedulers = _get_scheduler_sts(current_app.redis_conn)
+    return render_template('index.html', rq_queues=rq_queues, rq_workers=rq_workers, job_list=job_list, schedulers=schedulers)
 
 
 @app.route('/queues')
@@ -83,5 +99,5 @@ def jobs():
 
 @app.route('/schedulers')
 def schedulers():
-    scheduled_jobs = _get_scheduled_jobs(current_app.redis_conn)
-    return render_template('schedulers.html', scheduled_jobs=scheduled_jobs)
+    schedulers = _get_scheduler_sts(current_app.redis_conn)
+    return render_template('schedulers.html', schedulers=schedulers, scheduled_jobs=scheduled_jobs)
