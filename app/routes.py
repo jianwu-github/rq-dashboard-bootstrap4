@@ -100,4 +100,5 @@ def jobs():
 @app.route('/schedulers')
 def schedulers():
     schedulers = _get_scheduler_sts(current_app.redis_conn)
+    scheduled_jobs = _get_scheduled_jobs(current_app.redis_conn)
     return render_template('schedulers.html', schedulers=schedulers, scheduled_jobs=scheduled_jobs)
